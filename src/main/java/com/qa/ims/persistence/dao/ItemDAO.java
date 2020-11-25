@@ -25,11 +25,6 @@ public class ItemDAO implements Dao<Item> {
 		return new Item(item_id, item_name, item_price);
 	}
 
-	/**
-	 * Reads all Items from the database
-	 * 
-	 * @return A list of Item
-	 */
 	@Override
 	public List<Item> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -50,7 +45,7 @@ public class ItemDAO implements Dao<Item> {
 	public Item readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM items ORDER BY id DESC LIMIT 1");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM items ORDER BY item_id DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -60,11 +55,7 @@ public class ItemDAO implements Dao<Item> {
 		return null;
 	}
 
-	/**
-	 * Creates a Item in the database
-	 * 
-	 * @param Item - takes in a item object. id will be ignored
-	 */
+
 	@Override
 	public Item create(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -92,13 +83,7 @@ public class ItemDAO implements Dao<Item> {
 		return null;
 	}
 
-	/**
-	 * Updates a item in the database
-	 * 
-	 * @param item - takes in a item object, the id field will be used to
-	 *                 update that item in the database
-	 * @return
-	 */
+
 	@Override
 	public Item update(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -113,16 +98,12 @@ public class ItemDAO implements Dao<Item> {
 		return null;
 	}
 
-	/**
-	 * Deletes a Item in the database
-	 * 
-	 * @param id - id of the Item
-	 */
+
 	@Override
 	public int delete(long item_id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			return statement.executeUpdate("delete from Item where item_id = " + item_id);
+			return statement.executeUpdate("delete from items where item_id = " + item_id);
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
