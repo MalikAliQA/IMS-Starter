@@ -96,7 +96,7 @@ public class OrderDAO implements Dao<Order> {
 	public Order createOrderItem(long orderID, long itemID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("INSERT INTO order_item(item_id, order_id) VALUES('" + itemID + "', '" + orderID + "');");
+			statement.executeUpdate("INSERT INTO order_item(order_id, item_id) VALUES('" + orderID + "', '" + itemID + "');");
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -145,10 +145,16 @@ public class OrderDAO implements Dao<Order> {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
+	
+		return 0;
+	}
+	
+	public int deleteOrderItem(long Orderid) {
+
 		
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			return statement.executeUpdate("DELETE FROM order_item WHERE order_id= " + id + ";");
+			return statement.executeUpdate("DELETE FROM order_item WHERE order_id= " + Orderid + ";");
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -156,6 +162,8 @@ public class OrderDAO implements Dao<Order> {
 	
 		return 0;
 	}
+	
+	
 	
 	public int removeItem(long orderID, long itemID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
