@@ -88,5 +88,17 @@ public class OrderDAOTest {
 	public void deleteOrderItem() {
 		assertEquals(2, orderDAO.deleteOrderItem(1));
 	}
+	
+//	@Test
+//	public void createOrderItem() {
+//		List<Item> items = new ArrayList<>();
+//		items.add(new Item(1l ,"Overwatch", 19.99));
+//		List<Order> expected = new ArrayList<>();
+//		expected.add(new Order(1l, 1l));//, items));
+//		//Order createOrderItem = new Order(1l, 2l);
+//		//Order expected = new Order(1l, 1l, items);
+//		
+//		assertEquals(expected, orderDAO.createOrderItem(1l, 1l));
+//	}
 
 }

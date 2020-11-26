@@ -96,7 +96,7 @@ public class Order {
 		}
 		
 		return "================================================================================\n"
-				+ "Order ID: " + id + " | Customer ID: " + customerID + "\nItems: \n" + eachprice + "\n| Total Price £" + totalPrice + " |\n"
+				+ "Order ID: " + id + " | Customer ID: " + customerID + "\nItems: \n" + eachprice + "\n| Total Price: " + totalPrice + " |\n"
 				+ "================================================================================\n";
 	}
 
