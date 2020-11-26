@@ -8,8 +8,6 @@ public class Order {
 
 	private long id;
 	private long customerID;
-	private Long item_id;
-	private Long order_id;
 	private List<Item> items = new ArrayList<>();
 	
 
@@ -19,24 +17,20 @@ public class Order {
 	
 	
 	
-	public Order(long item_id, long order_id) {
+	public Order(long id, long customerID) {
 		super();
-		this.item_id = item_id;
-		this.order_id = order_id;
+		this.id = id;
+		this.customerID = customerID;
 	}
 	
-	public Order(long customerID, long item_id, long order_id) {
-		super();
-		this.customerID = customerID;
-		this.item_id = item_id;
-	}
-
 	public Order(long id, long customerID, List<Item> items) {
 		super();
 		this.id = id;
 		this.customerID = customerID;
 		this.items = items;
 	}
+
+	
 	//Getters and Setters
 	
 	public long getId() {
@@ -58,25 +52,6 @@ public class Order {
 		this.customerID = customerID;
 	}
 
-
-	public Long getItem_id() {
-		return item_id;
-	}
-
-
-	public void setItem_id(Long item_id) {
-		this.item_id = item_id;
-	}
-	
-	public Long getOrder_id() {
-		return order_id;
-	}
-
-
-
-	public void setOrder_id(Long order_id) {
-		this.order_id = order_id;
-	}
 	
 
 	public List<Item> getItems() {
@@ -124,6 +99,7 @@ public class Order {
 				+ "Order ID: " + id + " | Customer ID: " + customerID + "\nItems: \n" + eachprice + "\n| Total Price £" + totalPrice + " |\n"
 				+ "================================================================================\n";
 	}
+
 
 	
 }

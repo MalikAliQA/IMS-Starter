@@ -51,7 +51,20 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("SELECT CUSTOMER ID ");
 		Long customerID = utils.getLong();
 		Order order = orderDAO.create(new Order(customerID));
-		LOGGER.info("CREATED ORDER SELECT UPDATE TO ADD ITEMS TO ORDER");
+		//LOGGER.info("CREATED ORDER SELECT UPDATE TO ADD ITEMS TO ORDER");
+		String end;
+		do {
+			List<Item> items = itemDAO.readAll();
+			for (Item item : items) {
+				LOGGER.info(item.toString());
+			}
+			LOGGER.info("SELECT ID OF ITEM TO ADD");
+			long itemID = utils.getLong();
+			orderDAO.createOrderItem(order.getId(), itemID);
+			LOGGER.info("ADD MORE: YES / NO");
+			end = utils.getString();
+		}while (end.toLowerCase().equals("yes"));
+		order = orderDAO.readLatest();
 		return order;
 	}
 		
@@ -64,11 +77,11 @@ public class OrderController implements CrudController<Order> {
 		Long itemID;
 		boolean flag = true;
 		while(flag) {
-			LOGGER.info("\n 1 Add an Item to Order \n 2 Return to Main Menu");
+			LOGGER.info("\n 1 Add an Item to Order \n 2 Delete an Item \n 3 Return to Main Menu");
 			String choice = utils.getString();
 			switch(choice) {
 			case "1":
-				itemDAO.readAll();
+				//itemDAO.readAll();
 				List<Order> orders = orderDAO.readAll();
 				for (Order order1 : orders) {
 					LOGGER.info(order1.toString());
@@ -84,51 +97,39 @@ public class OrderController implements CrudController<Order> {
 				orderDAO.createOrderItem(id, itemID);
 				break;
 			case "2":
+			//itemDAO.readAll();
+			List<Order> ordersdel = orderDAO.readAll();
+			for (Order order1 : ordersdel) {
+				LOGGER.info(order1.toString());
+			}
+			LOGGER.info("SELECT ORDER ID TO DELETE FROM");
+			id = utils.getLong();
+			LOGGER.info(orderDAO.readOrderItems(id));
+			LOGGER.info("SELECT ID OF ITEM TO DELETE FROM ORDER");
+			Long itemID1 = utils.getLong();
+			orderDAO.removeItem(id, itemID1);
+			break;
+			
+			case "3":
 				LOGGER.info("Returning to ORDER MENU \n");
 				flag = false;
-				order = orderDAO.readOrder(id);
-				return order;
+				break;
 			}
 		}
-		return null;
+		return orderDAO.readOrder(id);
 	}
 
 	@Override
 	public int delete() {
-		boolean flag = true;
-		while (flag) {
-			LOGGER.info("\n 1 REMOVE AN ITEM FROM ORDER \n 2 DELETE FULL ORDER \n 3 RETURN TO ORDER MENU");
-			String choice = utils.getString();
-			switch(choice) {
-			case "1":
-				itemDAO.readAll();
-				List<Order> orders = orderDAO.readAll();
-				for (Order order1 : orders) {
-					LOGGER.info(order1.toString());
-				}
-				LOGGER.info("SELECT ORDER ID TO DELETE FROM");
-				Long id = utils.getLong();
-				LOGGER.info(orderDAO.readOrderItems(id));
-				LOGGER.info("SELECT ID OF ITEM TO DELETE FROM ORDER");
-				Long itemID = utils.getLong();
-				orderDAO.removeItem(id, itemID);
-				break;
-			case "2":
-				List<Order> orders1 = orderDAO.readAll();
-				for (Order order2 : orders1) {
-					LOGGER.info(order2.toString());
-				}
-				LOGGER.info("ENTER ID OF ORDER TO DELETE");
-				Long order_id = utils.getLong();
-				orderDAO.delete(order_id);
-				break;
-			case "3":
-				LOGGER.info("Returning to ORDER MENU \n");
-				flag = false;
-				break;	
-			}
+		List<Order> orders = orderDAO.readAll();
+		for (Order order : orders) {
+			LOGGER.info(order.toString());
 		}
-		return 0;
+		LOGGER.info("SELECT ID OF ORDER TO DELETE");
+		Long id = utils.getLong();
+		orderDAO.deleteOrderItem(id);
+		return orderDAO.delete(id);
+		
 	}
 
 }
