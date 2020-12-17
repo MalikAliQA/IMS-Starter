@@ -187,7 +187,7 @@ once completed this will create a new folder called target and within that folde
 ## Authors
 
 * **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
-* **Malik Ali** - *Finalisation*  - [andrewklein](https://github.com/MalikAliQA)
+* **Malik Ali** - *Finalisation*  - [MalikAli](https://github.com/MalikAliQA)
 
 ## License
 
